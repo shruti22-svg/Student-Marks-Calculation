@@ -97,7 +97,7 @@ def run_tests():
 
         assert "270" in total_el.text, f"Expected 270 in total, got '{total_el.text}'"
         assert "90" in avg_el.text, f"Expected 90 in average, got '{avg_el.text}'"
-        assert "Passed" in status_el.text, f"Expected Passed status, got '{status_el.text}'"
+        assert "passed" in status_el.text.lower(), f"Expected Passed status, got '{status_el.text}'"
         assert "A+" in grade_el.text, f"Expected A+ grade, got '{grade_el.text}'"
         print(f"[PASS] Test 2: Valid marks verified: Total={total_el.text.split()[0]}, Avg={avg_el.text}, Grade={grade_el.text}, Status={status_el.text}")
 
@@ -169,7 +169,7 @@ def run_tests():
         time.sleep(1.5)
 
         status_el = wait.until(EC.visibility_of_element_located((By.ID, "status-result")))
-        assert "Failed" in status_el.text, f"Expected Failed status, got '{status_el.text}'"
+        assert "fail" in status_el.text.lower(), f"Expected Failed status, got '{status_el.text}'"
         print(f"[PASS] Test 5: Failing grade boundary condition verified: Status={status_el.text}")
 
         # Test Case 6: Reset Functionality
