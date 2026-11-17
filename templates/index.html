@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Marks Calculation System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <div class="badge">Lab Assignment 9</div>
+            <h1 id="page-title">Student Marks Calculation</h1>
+            <p class="subtitle">Enter marks for three subjects to compute Total, Average, Percentage, and Grade.</p>
+        </header>
+
+        <div class="grid-container">
+            <!-- Input Form Card -->
+            <div class="card form-card">
+                <div class="card-header">
+                    <h2>Enter Marks</h2>
+                </div>
+                <div class="card-body">
+                    {% if error %}
+                    <div class="alert alert-danger" id="error-alert">
+                        <strong>Error:</strong> <span id="error-message">{{ error }}</span>
+                    </div>
+                    {% endif %}
+
+                    <form id="marksForm" action="/" method="POST">
+                        <div class="form-group">
+                            <label for="student_name">Student Name (Optional)</label>
+                            <input type="text" id="student_name" name="student_name" placeholder="e.g. Shruti" value="{{ student_name }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sub1">Subject 1 Marks (out of 100) <span class="required">*</span></label>
+                            <input type="number" id="sub1" name="sub1" min="0" max="100" step="any" placeholder="e.g. 85" required value="{{ sub1 }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sub2">Subject 2 Marks (out of 100) <span class="required">*</span></label>
+                            <input type="number" id="sub2" name="sub2" min="0" max="100" step="any" placeholder="e.g. 90" required value="{{ sub2 }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sub3">Subject 3 Marks (out of 100) <span class="required">*</span></label>
+                            <input type="number" id="sub3" name="sub3" min="0" max="100" step="any" placeholder="e.g. 95" required value="{{ sub3 }}">
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" id="btn-calculate" class="btn btn-primary">Calculate Result</button>
+                            <a href="/" id="btn-reset" class="btn btn-secondary">Reset</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Result Card -->
+            <div class="card result-card" id="results-card">
+                <div class="card-header">
+                    <h2>Calculation Results</h2>
+                </div>
+                <div class="card-body">
+                    {% if result %}
+                    <div class="student-banner">
+                        <span class="student-label">Result for</span>
+                        <h3 id="display-student-name">{{ result.student_name }}</h3>
+                        <div class="badge-status {{ 'status-pass' if result.status == 'Passed' else 'status-fail' }}" id="status-result">
+                            {{ result.status }}
+                        </div>
+                    </div>
+
+                    <div class="results-grid">
+                        <div class="result-box">
+                            <div class="result-title">Subject 1</div>
+                            <div class="result-value" id="display-sub1">{{ result.sub1 }} / 100</div>
+                        </div>
+                        <div class="result-box">
+                            <div class="result-title">Subject 2</div>
+                            <div class="result-value" id="display-sub2">{{ result.sub2 }} / 100</div>
+                        </div>
+                        <div class="result-box">
+                            <div class="result-title">Subject 3</div>
+                            <div class="result-value" id="display-sub3">{{ result.sub3 }} / 100</div>
+                        </div>
+                    </div>
+
+                    <div class="summary-metrics">
+                        <div class="metric-item highlight">
+                            <div class="metric-label">Total Marks</div>
+                            <div class="metric-value" id="total-result">{{ result.total }} <span class="metric-total">/ 300</span></div>
+                        </div>
+                        <div class="metric-item highlight">
+                            <div class="metric-label">Average Marks</div>
+                            <div class="metric-value" id="average-result">{{ result.average }}</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-label">Percentage</div>
+                            <div class="metric-value" id="percentage-result">{{ result.percentage }}%</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-label">Grade</div>
+                            <div class="metric-value" id="grade-result">{{ result.grade }}</div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="empty-state" id="empty-state-notice">
+                        <div class="empty-icon">📊</div>
+                        <p>No marks entered yet.</p>
+                        <span class="hint">Enter marks for Subject 1, Subject 2, and Subject 3 on the left and click <strong>Calculate Result</strong>.</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <footer class="app-footer">
+            <p>Student Marks Calculation App &bull; GitHub: <a href="https://github.com/shruti22-svg/Student-Marks-Calculation" target="_blank">shruti22-svg/Student-Marks-Calculation</a></p>
+        </footer>
+    </div>
+</body>
+</html>
